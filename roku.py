@@ -12,7 +12,10 @@ if __name__ == "__main__":
 
     loop = asyncio.get_event_loop()
 
-    servers = []
+    # servers = []
+    servers = {}
+
+    desired_servers = ['MediaRoom', 'LivingRoom', 'MasterBedroom', 'Office', 'Deck']
 
     DEFAULT_HOST_IP = "10.9.8.184"
     DEFAULT_LISTEN_PORTS = 6230
@@ -28,10 +31,11 @@ if __name__ == "__main__":
             publish.single(topic, message, hostname = MQTT_HOST, port = int(MQTT_PORT))
 
         def on_keydown(self, roku_usn, key):
-            self.publish('keydown', roku_usn, key)
-            
-        def on_keyup(self, roku_usn, key):
-            self.publish('keyup', roku_usn, key)
+            # self.publish('keydown', roku_usn, key)
+            self.publish('keypress', roku_usn, key)
+
+        # def on_keyup(self, roku_usn, key):
+        #     self.publish('keyup', roku_usn, key)
 
         def on_keypress(self, roku_usn, key):
             print(roku_usn)
@@ -45,20 +49,24 @@ if __name__ == "__main__":
     @asyncio.coroutine
     def init(loop):
         handler = MQTTRokuCommandHandler()
-        discovery_endpoint, roku_api_endpoint = emulated_roku.make_roku_api(
-            loop=loop,
-            handler=handler,
-            host_ip=DEFAULT_HOST_IP,
-            listen_port=DEFAULT_LISTEN_PORTS,
-            advertise_ip=DEFAULT_HOST_IP,
-            advertise_port=DEFAULT_LISTEN_PORTS,
-            bind_multicast=DEFAULT_UPNP_BIND_MULTICAST)  # !Change Host IP!
+        for server in desired_servers:
+            discovery_endpoint, roku_api_endpoint = emulated_roku.make_roku_api(
+                loop=loop,
+                handler=handler,
+                host_ip=DEFAULT_HOST_IP,
+                listen_port=DEFAULT_LISTEN_PORTS,
+                advertise_ip=DEFAULT_HOST_IP,
+                advertise_port=DEFAULT_LISTEN_PORTS,
+                bind_multicast=DEFAULT_UPNP_BIND_MULTICAST,
+                name=server)  # !Change Host IP!
 
-        discovery_transport, _ = yield from discovery_endpoint
-        api_server = yield from roku_api_endpoint
+            discovery_transport, _ = yield from discovery_endpoint
+            api_server = yield from roku_api_endpoint
 
-        servers.append(discovery_transport)
-        servers.append(api_server)
+            servers[server + "_discovery"] = discovery_transport
+            servers[server + "_api"] = api_server
+
+            DEFAULT_LISTEN_PORTS =+ 1
 
     loop.run_until_complete(init(loop))
 
