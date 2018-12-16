@@ -50,7 +50,7 @@ if __name__ == "__main__":
     def init(loop):
         handler = MQTTRokuCommandHandler()
         ip_adjustment = 0
-        ip = DEFAULT_HOST_IP.split()
+        ip = DEFAULT_HOST_IP.split('.')
         for server in desired_servers:
             discovery_endpoint, roku_api_endpoint = emulated_roku.make_roku_api(
                 loop=loop,
