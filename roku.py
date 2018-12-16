@@ -14,10 +14,10 @@ if __name__ == "__main__":
 
     servers = []
 
-    DEFAULT_HOST_IP = os.environ['HOST_IP']
-    DEFAULT_LISTEN_PORTS = os.environ['HOST_PORT']
-    MQTT_HOST = os.environ['MQTT_HOST']
-    MQTT_PORT = os.environ['MQTT_PORT']
+    DEFAULT_HOST_IP = "10.9.8.184"
+    DEFAULT_LISTEN_PORTS = 6230
+    MQTT_HOST = "10.9.8.184"
+    MQTT_PORT = 1883
     
     DEFAULT_UPNP_BIND_MULTICAST = True
 
