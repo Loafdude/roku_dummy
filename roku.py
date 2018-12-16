@@ -52,6 +52,7 @@ if __name__ == "__main__":
         ip_adjustment = 0
         ip = DEFAULT_HOST_IP.split('.')
         for server in desired_servers:
+            print('starting ' + server + 'server on ' + ip[0] + '.' + ip[1] + '.' + ip[2] + '.' + str(int(ip[3]) + ip_adjustment))
             discovery_endpoint, roku_api_endpoint = emulated_roku.make_roku_api(
                 loop=loop,
                 handler=handler,
