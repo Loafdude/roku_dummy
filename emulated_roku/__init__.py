@@ -79,7 +79,7 @@ ROKU_DEVICE_INFO_TEMPLATE = """<device-info>
 </device-info>"""
 
 APPS_TEMPLATE = """<apps>
-    <app id="1" version="1.0.0">Kodi</app>
+    <app id="Kodi" version="1.0.0">Kodi</app>
     <app id="2" version="1.0.0">Netflix</app>
     <app id="3" version="1.0.0">Amazon Video</app>
     <app id="4" version="1.0.0">Google Music</app>
