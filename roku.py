@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     loop = asyncio.get_event_loop()
 
-    # servers = []
+    servers = []
 
     DEFAULT_HOST_IP = "10.9.8.184"
     DEFAULT_LISTEN_PORTS = 6230
