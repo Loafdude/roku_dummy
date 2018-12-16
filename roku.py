@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     @asyncio.coroutine
     def init(loop):
-        handler = MQTTRokuCommandHandler()]
+        handler = MQTTRokuCommandHandler()
         discovery_endpoint, roku_api_endpoint = emulated_roku.make_roku_api(
             loop=loop,
             handler=handler,
