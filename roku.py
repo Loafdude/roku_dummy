@@ -57,7 +57,7 @@ if __name__ == "__main__":
                 handler=handler,
                 host_ip=DEFAULT_HOST_IP,
                 listen_port=DEFAULT_LISTEN_PORTS,
-                advertise_ip=ip[0] + '.' + ip[1] + '.' + ip[2] + '.' + ip[3] + ip_adjustment,
+                advertise_ip=ip[0] + '.' + ip[1] + '.' + ip[2] + '.' + str(int(ip[3]) + ip_adjustment),
                 advertise_port=DEFAULT_LISTEN_PORTS,
                 bind_multicast=DEFAULT_UPNP_BIND_MULTICAST,
                 name=server)  # !Change Host IP!
