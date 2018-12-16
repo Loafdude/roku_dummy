@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     desired_servers = ['MediaRoom', 'LivingRoom', 'MasterBedroom', 'Office', 'Deck']
 
-    DEFAULT_HOST_IP = "10.9.8.184"
+    DEFAULT_HOST_IP = "10.9.8.43"
     DEFAULT_LISTEN_PORTS = 6230
     MQTT_HOST = "10.9.8.184"
     MQTT_PORT = 1883
@@ -49,14 +49,15 @@ if __name__ == "__main__":
     @asyncio.coroutine
     def init(loop):
         handler = MQTTRokuCommandHandler()
-        port = DEFAULT_LISTEN_PORTS
+        ip_adjustment = 0
+        ip = DEFAULT_HOST_IP.split()
         for server in desired_servers:
             discovery_endpoint, roku_api_endpoint = emulated_roku.make_roku_api(
                 loop=loop,
                 handler=handler,
                 host_ip=DEFAULT_HOST_IP,
-                listen_port=port,
-                advertise_ip=DEFAULT_HOST_IP,
+                listen_port=DEFAULT_LISTEN_PORTS,
+                advertise_ip=ip[0] + '.' + ip[1] + '.' + ip[2] + '.' + ip[3] + ip_adjustment,
                 advertise_port=DEFAULT_LISTEN_PORTS,
                 bind_multicast=DEFAULT_UPNP_BIND_MULTICAST,
                 name=server)  # !Change Host IP!
@@ -67,7 +68,7 @@ if __name__ == "__main__":
             servers[server + "_discovery"] = discovery_transport
             servers[server + "_api"] = api_server
 
-            port = port + 1
+            ip_adjustment = ip_adjustment + 1
 
     loop.run_until_complete(init(loop))
 
