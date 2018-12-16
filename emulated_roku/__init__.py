@@ -26,7 +26,7 @@ ROKU_INFO_TEMPLATE = """<?xml version="1.0" encoding="UTF-8" ?>
     <manufacturer>Emulated Roku</manufacturer>
     <manufacturerURL>http://www.roku.com/</manufacturerURL>
     <modelDescription>Emulated Roku</modelDescription>
-    <modelName>{name}</modelName>
+    <modelName>Emulated Roku 4</modelName>
     <modelNumber>4400x</modelNumber>
     <modelURL>http://www.roku.com/</modelURL>
     <serialNumber>{usn}</serialNumber>
@@ -49,7 +49,7 @@ ROKU_DEVICE_INFO_TEMPLATE = """<device-info>
     <device-id>{usn}</device-id>
     <vendor-name>Emulated Roku</vendor-name>
     <model-number>4400X</model-number>
-    <model-name>{name}</model-name>
+    <model-name>Emulated Roku 4</model-name>
     <model-region>US</model-region>
     <supports-ethernet>true</supports-ethernet>
     <wifi-mac>b0:a7:37:96:4d:fb</wifi-mac>
@@ -277,7 +277,7 @@ class RokuCommandHandler:
 def make_roku_api(loop, handler,
                   host_ip="0.0.0.0", listen_port=8060,
                   advertise_ip=None, advertise_port=None,
-                  bind_multicast=True, name="Roku 4"):
+                  bind_multicast=True):
     """Intialize the Roku API and discovery protocols."""
     advertise_ip = advertise_ip or host_ip
     advertise_port = advertise_port or listen_port
@@ -288,8 +288,9 @@ def make_roku_api(loop, handler,
     roku_usn = USN_GENERATOR.uuid(
         name="{}{}".format(advertise_ip, advertise_port))
 
-    roku_info = ROKU_INFO_TEMPLATE.format(uuid=roku_uuid, usn=roku_usn, name=name)
-    device_info = ROKU_DEVICE_INFO_TEMPLATE.format(uuid=roku_uuid, name=name, usn=roku_usn)
+    roku_info = ROKU_INFO_TEMPLATE.format(uuid=roku_uuid, usn=roku_usn)
+    device_info = ROKU_DEVICE_INFO_TEMPLATE.format(uuid=roku_uuid,
+                                                   usn=roku_usn)
 
     @asyncio.coroutine
     def roku_root_handler(request):
