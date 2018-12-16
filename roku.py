@@ -18,13 +18,14 @@ if __name__ == "__main__":
     DEFAULT_LISTEN_PORTS = 6230
     MQTT_HOST = "10.9.8.184"
     MQTT_PORT = 1883
+    ROOM = "MediaRoom"
     
     DEFAULT_UPNP_BIND_MULTICAST = True
 
     class MQTTRokuCommandHandler(emulated_roku.RokuCommandHandler):
         """Emulated Roku command handler."""
         def publish(self, event, usn, message):
-            topic = 'roku/'+event
+            topic = 'Home/' + ROOM + '/Roku/'+event
             publish.single(topic, message, hostname = MQTT_HOST, port = int(MQTT_PORT))
 
         def on_keydown(self, roku_usn, key):
