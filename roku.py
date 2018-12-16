@@ -49,12 +49,13 @@ if __name__ == "__main__":
     @asyncio.coroutine
     def init(loop):
         handler = MQTTRokuCommandHandler()
+        port = DEFAULT_LISTEN_PORTS
         for server in desired_servers:
             discovery_endpoint, roku_api_endpoint = emulated_roku.make_roku_api(
                 loop=loop,
                 handler=handler,
                 host_ip=DEFAULT_HOST_IP,
-                listen_port=DEFAULT_LISTEN_PORTS,
+                listen_port=port,
                 advertise_ip=DEFAULT_HOST_IP,
                 advertise_port=DEFAULT_LISTEN_PORTS,
                 bind_multicast=DEFAULT_UPNP_BIND_MULTICAST,
@@ -66,7 +67,7 @@ if __name__ == "__main__":
             servers[server + "_discovery"] = discovery_transport
             servers[server + "_api"] = api_server
 
-            DEFAULT_LISTEN_PORTS =+ 1
+            port = port + 1
 
     loop.run_until_complete(init(loop))
 
